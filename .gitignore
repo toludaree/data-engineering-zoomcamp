@@ -1,0 +1,5 @@
+arch_1.jpg
+private/
+ny_taxi_postgres_data/
+.ipynb_checkpoints
+*.csv
