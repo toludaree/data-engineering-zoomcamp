@@ -1,3 +1,6 @@
+# Notes
+
+_This notes are not a guide to anyone, but me. I did not have time to create comprehensive notes this week; hopefully by next week, I would be able to create comprehensive notes._
 ## Introduction to Docker
 - Docker is a product that delivers software in packages called **containers**. Containers are **isolated** from one another
 - Data pipeline is a process/service that gets in data and produces more data. It can be a Python script that gets some CSV file and transforms or processes it and it produces an output e.g a Postgres table
@@ -18,13 +21,10 @@
 ```bash
 docker run hello-world
 ```
-- If we create a pipeline for example:
-```python
-import pandas
-```
 
-```Dockerfile
-FROM python:3.9
+## Integrating NY Taxi Data to Postgres
+- The `-e` option is used to specify environment variables when running a docker image
 
-RUN python
-```
+- I need to learn more about postgres
+
+- [Dataset Used](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
