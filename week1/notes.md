@@ -22,9 +22,22 @@ _This notes are not a guide to anyone, but me. I did not have time to create com
 docker run hello-world
 ```
 
-## Integrating NY Taxi Data to Postgres
+## Ingesting NY Taxi Data to Postgres
 - The `-e` option is used to specify environment variables when running a docker image
 
 - I need to learn more about postgres
 
 - [Dataset Used](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
+
+## Connecting pgAdmin and Postgres
+- The port mappimg is
+```ssh
+-p 8080:80
+```
+- Host machine listens on port 8080 while pgAdmin listens on port 80
+
+## Dockerising the Ingestion Script
+
+## Running Postgres and pgAdmin with Docker-Compose
+
+## SQL Refresher

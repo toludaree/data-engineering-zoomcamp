@@ -1,2 +1,2 @@
 # data-engineering-zoomcamp
-This repo contains notes and homeworks from the [Data Enginnering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp) by [Datatalks.Club](https://datatalks.club/)
+This repo contains notes and homeworks from the [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp) by [Datatalks.Club](https://datatalks.club/)
