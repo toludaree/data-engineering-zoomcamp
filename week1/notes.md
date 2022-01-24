@@ -41,3 +41,8 @@ docker run hello-world
 ## Running Postgres and pgAdmin with Docker-Compose
 
 ## SQL Refresher
+
+## Introduction to Google Cloud Platform
+- GCP is a host of cloud computing services offered by Google for compute services, storage services and application development
+- The services can be divided into different parts:
+-
