@@ -27,3 +27,19 @@ A data lake is a centralised storage repository for storing big data from many s
 * ELT is a Data Lake soluition. IT's own idea is *schema-on-read*: data is written first, then the schema is determined on the read.
 
 ## Gotchas (Challenges) of Data Lake
+* Using a Data Lake starts with a good intention, but it can soon turn into a **Data Swamp**
+* This is due to lack of organisation, versioning, incompatible schemas for same data.
+* It also can occur when there is no metadata associated with the data in the Data Lake
+* When _joins_ become impossible, Data Lakes become useless.
+* When a Data Lake converts into a Data Swamp, it becomes hard to be useful by Data Scientists and Analysts.
+
+## Cloud Providers For Data Lakes
+* **G**oogle **C**loud **P**latform: Cloud Storage
+* **A**mazon **W**eb **S**ervices: S3
+* AZURE: Azure Blob
+
+## For More Info:
+* [Wikipedia](https://en.wikipedia.org/wiki/Data_lake)
+* [2011 Aricle on Data Lake](https://www.forbes.com/sites/ciocentral/2011/07/21/big-data-requires-a-big-new-architecture/?sh=39f64fdc1157)
+* [Data Lake vs Data Warehouse](https://www.talend.com/resources/data-lake-vs-data-warehouse/)
+* [Turning Your Data Lake Into a Data Swamp](https://www.integrate.io/blog/turning-your-data-lake-into-a-data-swamp/)
