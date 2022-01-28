@@ -3,7 +3,6 @@
 
 import os
 import argparse
-from platform import system
 import pandas as pd
 from time import time
 from sqlalchemy import create_engine
