@@ -2,7 +2,7 @@
 ## What is a Data Lake?
 A data lake is a centralised storage repository for storing big data from many sources in its raw or native format. Data stored in a data lake can be structured, semi-structured, or unstructured. A data lake solution generaly has to be secure, scalable and inexpensive
 
-![data](../images/datalake-diagram.png)
+![datalake-diagram](../images/datalake-diagram.png)
 
 ## Data Lake vs. Data Warehouse
 |                  |Data Lake                             |Data Warehouse                    |
@@ -43,3 +43,41 @@ A data lake is a centralised storage repository for storing big data from many s
 * [2011 Aricle on Data Lake](https://www.forbes.com/sites/ciocentral/2011/07/21/big-data-requires-a-big-new-architecture/?sh=39f64fdc1157)
 * [Data Lake vs Data Warehouse](https://www.talend.com/resources/data-lake-vs-data-warehouse/)
 * [Turning Your Data Lake Into a Data Swamp](https://www.integrate.io/blog/turning-your-data-lake-into-a-data-swamp/)
+
+# Introduction to Workflow Orchestration
+We made a kind of pipleline last week, [ingest_data.py](https://github.com/Isaac-Tolu/data-engineering-zoomcamp/blob/main/week1/2_docker_sql/dockerfiles/ingest_data.py). This script downloaded a csv file, did some processing and ingested it to Postgres. It got data as input, and produced data as output
+
+![wrong-pipeline](../images/week1-pipeline.png)
+
+This is a good example of how we should _not_ write data pipelines. The reason is because we're doing two different operations in one script. If something happened during the ingesting process (e.g. connection error to Postgres), running the script again means re-downloading the csv file. Different operations should be splitted into multiple files
+
+![correct-pipeline](../images/good-pipeline.png)
+
+The data pipeline is parameterized. The different jobs have parameters and the pipeline as a whole also has a parameter (URL). The parameter of the pipeline can even be time e.g. running the whole pipeline on 2022-01-31.
+
+![parameterized-pipeline](../images/pipeline2.png)
+
+This week, we're doing a much more interesting and complex architecture:
+* Download the CSV file,
+* Convert it to a parquet file. A parquet file is much more efficient than a CSV file, as it uses a columnar storage format
+* Upload the parquet file to Google Cloud Storage
+* Upload to BigQuery from GCS
+
+The final result would be a table in BigQuery
+
+![week2-pipeline](../images/pipeline4.png)
+
+A data pipeline is often called a data workflow. It is also sometimes referred to as **DAG** (**D**irected **A**cyclic **G**raph):
+* Directed because it has a direction, 
+* Acyclic because it does not work in cycles i.e. as a loop, 
+* Graph because the boxes are the nodes and arrows define dependencies.
+
+We use orchestration tools to manage this workflow. A traditional way can be through the use of python scripts and the [MAKE](https://www.gnu.org/software/make/) utility to define dependencies.This is usually used for smaller workflows.
+
+There are standard tools created specifically for managing data workflows. Some of them are:
+* [Luigi](https://luigi.readthedocs.io/en/stable/)
+* [Apache Airflow](https://airflow.apache.org/)
+* [Prefect](https://www.prefect.io/)
+* [Argo](https://argoproj.github.io/)
+
+Apache Airflow is the most popular tool used, and that is what we'll be focusing on in this course.
