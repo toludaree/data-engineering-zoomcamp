@@ -59,7 +59,7 @@ The data pipeline is parameterized. The different jobs have parameters and the p
 
 This week, we're doing a much more interesting and complex architecture:
 * Download the CSV file,
-* Convert it to a parquet file. A parquet file is much more efficient than a CSV file, as it uses a columnar storage format
+* Convert it to a parquet file. A parquet file is much more efficient than a CSV file, as it uses a columnar storage format. Additional information about Parquet file is [here](https://dzone.com/articles/how-to-be-a-hero-with-powerful-parquet-google-and)
 * Upload the parquet file to Google Cloud Storage
 * Upload to BigQuery from GCS
 
