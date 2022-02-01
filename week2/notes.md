@@ -81,3 +81,67 @@ There are standard tools created specifically for managing data workflows. Some 
 * [Argo](https://argoproj.github.io/)
 
 Apache Airflow is the most popular tool used, and that is what we'll be focusing on in this course.
+
+# Setting up Airflow Environment with Docker-Compose
+![airflow-architecture](../images/airflow-architecture.png)
+
+The airflow architecture consists of a:
+- _Webserver_ which is a handy GUI to inspect, trigger and debug the behaviour of dags and tasks. It is available on localhost 8080,
+- _Scheduler_, a component responsible for scheduling jobs, it handles both triggering and schedule workflows, submits tasks to the executor to be ran, monitors all tasks and dags, and then triggers the task consensus once their dependencies are met,
+- _Worker_, a component that executes the task given by the scheduler
+- _Metadata Database_, a backend to the airflow environment. It is used by the scheduler, executor and webserver to store the state of the environment
+
+> **Difference between Executor and a Worker**  
+The _Executor_ is the mechanism which gets tasks executed while the _Worker_ is a node or processor that runs the actual tasks.
+
+There are other components in the docker-compose services which are optional:
+- A _Redis_ service, which is a message broker that forwards messages from the scheduler to the worker
+- _Flower_, for monitoring the environment, available at localhost 5555 by default
+- _airflow_init_, an initialisation service that initialises the configuration such as backend, user credentials, environment variables
+
+## Pre-setup
+- Rename the service account key that we downloaded last week to `google_credentials.json`, and store it in the path. `$HOME/.google/credentials/`. This is to maintain standardisation across our workshop setup:
+```ssh
+cd ~ && mkdir -p ~/.google/credentials
+mv <path/to/your/service-account-authkeys>.json ~/.google/credentials/google_credentials.json
+```
+- You may need to upgrade the docker-compose version to v2.0+ and set the memory of the Docker Engine to a minimum of 5GB (ideally 8GB), because if enough memory is not allocated, it might cause airflow-webserver to continuously restart. You can check amount of memory using this command:
+```ssh
+docker run --rm "debian:buster-slim" bash -c 'numfmt --to iec $(echo $(($(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE))))'
+```
+
+## Airflow Setup
+- Create a new subdirectory called `airflow`
+- Import the official image and setup from latest airflow version on the Airflow site or run this command:
+```ssh
+curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.2.3/docker-compose.yaml'
+```
+- The contents of the `docker-compose.yaml` file can be overwhelming, there is also a [no-frills](./airflow/extras/docker-compose-nofrills.yaml) version which only contains the web-server. All other services would then be initialised from the webserver. We'd stick with the former.
+- Create empty folders for `dags`, `logs`, and `plugins`
+```ssh
+mkdir -p ./dags ./logs ./plugins
+```
+- Set the airflow user, otherwise the files created in `dags`, `logs` and `plugins` will be created with root user
+```ssh
+echo -e "AIRFLOW_UID=$(id -u)" > .env
+```
+- If we run the original docker-compose file, it will run but it will not work in a GCP environment. We would have to build a custom Dockerfile to account for that. This would require us to edit the `build` part of the original docker-compose file.
+- Also, we'll need to create a `requirements.txt` file to install libraries via pip install:
+    - `apache-airflow-providers-google`: Google specific client for airflow
+    - `pyarrow`: For conversion of CSV to parquet files.
+
+## Execution
+- We build the docker image
+```ssh
+docker-compose build
+```
+- Initialise the airflow scheduler, DB and other configs
+```ssh
+docker-compose up airflow-init
+```
+This helps in authenticating your UID in order to interact with the webserver, sets other environment variables, sets up the backend (metadata database), airflow credentials etc.
+> This is not a production setup, that is why the username and password is airflow
+- Kick up all other services with:
+```ssh
+docker-compose up
+```
