@@ -7,3 +7,4 @@ ny_taxi_postgres_data/
 terraform.tfstate
 logs/
 plugins/
+__pycache__
