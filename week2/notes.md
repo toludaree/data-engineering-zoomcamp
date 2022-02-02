@@ -92,7 +92,7 @@ The airflow architecture consists of a:
 - _Metadata Database_, a backend to the airflow environment. It is used by the scheduler, executor and webserver to store the state of the environment
 
 > **Difference between Executor and a Worker**  
-The _Executor_ is the mechanism which gets tasks executed while the _Worker_ is a node or processor that runs the actual tasks.
+The _Executor_ is the mechanism which gets tasks executed while the _Worker_ is a node or processor that runs the actual tasks. More info [here](https://towardsdatascience.com/a-gentle-introduction-to-understand-airflow-executor-b4f2fee211b1#:~:text=What's%20Airflow%20Executor,-There%20are&text=The%20discipline%20%E2%80%9CExecutor%2C%E2%80%9D%20fittingly,tasks%20over%20to%20the%20Executor.)
 
 There are other components in the docker-compose services which are optional:
 - A _Redis_ service, which is a message broker that forwards messages from the scheduler to the worker
@@ -145,3 +145,18 @@ This helps in authenticating your UID in order to interact with the webserver, s
 ```ssh
 docker-compose up
 ```
+
+# Ingesting Data to GCP with Airflow
+We'll be covering the anatomy of DAGs, typical workflow components, and we'll be writing our own ingestion pipeline
+
+There are 4 main components to a workflow:
+- **DAG (Directed Acyclic Graph)**, specifies dependencies between tasks and has an explicit execution order. It also has a beginning and an end 
+- **Task**, defined unit of work. It is also known as opeators in airflow. The tasks define what to do
+- DAG run: Individual execution of the run of a a DAG
+- **Task Instance**: Individual run of a single task. They have an indicator of state e.g. `running`, `success`, `up_for_retry`, `failed`, `skipped` etc.
+> Ideally, a task should flow from `none` to `scheduled` to `queued` to `running` to `success`
+
+An airflow DAG id defined in a python file composed of:
+- **DAG definition**, we define a DAG using the `with` context manager. There are other ways to do this.
+- **Task**, usually come in the form of operators, sensors or task flows.
+- **Dependencies**, task dependencies are responsible for control flow within a DAG.
