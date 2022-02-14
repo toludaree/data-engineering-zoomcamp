@@ -21,3 +21,5 @@ Cluster by dispatching_base_num and SR_Flag
 
 ## Question 7: In which format does BigQuery save data
 Columnar
+
+> [SQL Reference file](https://github.com/Isaac-Tolu/data-engineering-zoomcamp/blob/main/week3/homework.sql)
