@@ -30,3 +30,6 @@ BigQuery has the ability to create an External Table on GCS and query from there
 
 # BigQuery Best Practices
 Our focus is mainly on cost reduction and improving query performance
+
+# Workshop
+Placing the word `dag` in the naming of your Python file optimises your Airflow environment
