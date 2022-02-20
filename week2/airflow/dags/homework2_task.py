@@ -85,6 +85,32 @@ download_parquetize_upload_remove_dag(
     YELLOW_TAXI_GCS_PATH_TEMPLATE
 )
 
+GREEN_URL_TEMPLATE = URL_PREFIX + "/green_tripdata_{{ execution_date.strftime(\'%Y-%m\') }}.csv"
+GREEN_CSV_FILE_TEMPLATE = "/green_tripdata_{{ execution_date.strftime(\'%Y-%m\') }}.csv"
+GREEN_PARQUET_FILE_TEMPLATE = GREEN_CSV_FILE_TEMPLATE.replace(".csv", ".parquet")
+GREEN_GCS_PATH_TEMPLATE = "raw/green_tripdata/{{ execution_date.strftime(\'%Y\') }}/{{ execution_date.strftime(\'%Y-%m\') }}.parquet"
+
+
+green_taxi_dag = DAG(
+    dag_id="green_taxi_data_dag",
+    default_args=default_args,
+    schedule_interval="0 6 2 * *",
+    start_date=datetime(2019, 1, 1),
+    end_date=datetime(2019, 12, 31),
+    catchup=True,
+    max_active_runs=3,
+    tags=['dtc-de'],
+)
+
+download_parquetize_upload_remove_dag(
+    green_taxi_dag,
+    GREEN_URL_TEMPLATE,
+    GREEN_CSV_FILE_TEMPLATE,
+    GREEN_PARQUET_FILE_TEMPLATE,
+    GREEN_GCS_PATH_TEMPLATE
+)
+
+
 FHV_URL_TEMPLATE = URL_PREFIX + "/fhv_tripdata_{{ execution_date.strftime(\'%Y-%m\') }}.csv"
 FHV_CSV_FILE_TEMPLATE = "/fhv_tripdata_{{ execution_date.strftime(\'%Y-%m\') }}.csv"
 FHV_PARQUET_FILE_TEMPLATE = FHV_CSV_FILE_TEMPLATE.replace(".csv", ".parquet")

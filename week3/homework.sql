@@ -26,3 +26,9 @@ SELECT COUNT(*) AS count_specific
     FROM composed-facet-339115.trips_data_all.fhv_tripdata_partitoned_clustered
     WHERE DATE(pickup_datetime) BETWEEN '2019-01-01' AND '2019-03-31'
         AND dispatching_base_num='B00987' OR dispatching_base_num='B02060' OR dispatching_base_num='B02279'
+
+-- Correct solution to Question 4. I should have partitioned by dropoff_datetime instead
+SELECT COUNT(*) AS count_specific
+    FROM composed-facet-339115.trips_data_all.fhv_tripdata_partitoned_clustered
+    WHERE DATE(dropoff_datetime) BETWEEN '2019-01-01' AND '2019-03-31'
+        AND dispatching_base_num IN ('B00987', 'B02279', 'B02060')
