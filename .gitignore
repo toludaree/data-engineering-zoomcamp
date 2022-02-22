@@ -1,7 +1,7 @@
 private/
 ny_taxi_postgres_data/
 .ipynb_checkpoints
-*.csv
+week1/2_docker_sql/*.csv
 .terraform/
 .terraform.lock.hcl
 terraform.tfstate
