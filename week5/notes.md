@@ -21,3 +21,6 @@ It is distributed as the jobs are run on a cluster that can have thousands of ma
 Spark also supports Streaming jobs. A streaming job can be seen as a sequence of small batches and the same techniques can be applied
 We use Spark when a simple SQL job cannot cover our usecase
 If your batch jobs can be expressed as SQL, then use Hive, Presto, AWS Athems
+
+# PySpark
+Spark treats every data column as string types and doesn't try to infer the schema
