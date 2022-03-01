@@ -10,3 +10,16 @@
 367170
 
 ## Question 4: Longest trip for each dayS
+2021-02-11
+
+## Question 5: Most frequent `dispatching_base_num`
+2
+
+## Question 6: Most common locations pair
+East New York / East New York
+
+## Bonus question: Join Type
+- **Join Type**: Left Join
+- **Mo. of stages**: 2
+
+[Reference Notebook](./code/week5_homework.ipynb)
