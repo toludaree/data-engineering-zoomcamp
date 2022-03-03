@@ -20,6 +20,6 @@ East New York / East New York
 
 ## Bonus question: Join Type
 - **Join Type**: Left Join
-- **Mo. of stages**: 2
+- **No. of stages**: 2
 
 [Reference Notebook](./code/week5_homework.ipynb)
